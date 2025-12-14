@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', loadedSuccessSection);
 async function loadedSuccessSection() {
     try {
         const getFeedback = await fetchFeedbacks();
-        console.log(getFeedback);
 
         renderFeedback(getFeedback.feedbacks);
 
@@ -118,9 +117,7 @@ swiper.on('slideChange', () => {
     }
 });
 
-const loader = document.querySelector('.ajax-loader');
-
-loader.innerHTML = '';
+const successAnim = refs.successAnimation;
 const total = 30;
 
 for (let i = 0; i < total; i++) {
@@ -133,20 +130,5 @@ for (let i = 0; i < total; i++) {
     use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#paw');
     svg.appendChild(use);
     paw.appendChild(svg);
-    loader.appendChild(paw);
+    successAnim.appendChild(paw);
 }
-
-let pos = -200;
-const step = 1;
-const screenWidth = window.innerWidth;
-
-function walk() {
-    pos += step;
-    loader.style.left = pos + 'px';
-    if (pos > screenWidth) {
-        pos = -200;
-    }
-    requestAnimationFrame(walk);
-}
-
-// walk();

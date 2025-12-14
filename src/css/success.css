@@ -1,10 +1,13 @@
-.container {
-    min-width: 280px;
-}
 
 .success {
     padding-top: 64px;
     padding-bottom: 64px;
+    overflow: hidden;
+    position: relative;
+}
+
+.success-container {
+    min-width: 280px;
     overflow: hidden;
 }
 
@@ -139,10 +142,10 @@ body .swiper-pagination-bullets-dynamic {
 .ajax-loader {
     position: absolute;
     top: 0%;
-    left: 140%;
+    left: 80%;
     transform-origin: 50% 50%;
-    transform: rotate(45deg) translate(-50%, 0%);
-    font-size: 50px;
+    transform: rotate(25deg) translate(-50%, 0%);
+    font-size: 68px;
     width: 1em;
     height: 3em;
     z-index: -1;
@@ -172,30 +175,6 @@ body .swiper-pagination-bullets-dynamic {
 
 .ajax-loader .paw:nth-child(even) {
     transform: rotate(10deg) translate(150%, 0);
-}
-
-.ajax-loader .paw:nth-child(1) {
-    animation-delay: 1.25s;
-}
-
-.ajax-loader .paw:nth-child(2) {
-    animation-delay: 1s;
-}
-
-.ajax-loader .paw:nth-child(3) {
-    animation-delay: 0.75s;
-}
-
-.ajax-loader .paw:nth-child(4) {
-    animation-delay: 0.5s;
-}
-
-.ajax-loader .paw:nth-child(5) {
-    animation-delay: 0.25s;
-}
-
-.ajax-loader .paw:nth-child(6) {
-    animation-delay: 0s;
 }
 
 .no-cssanimations .ajax-loader .paw {
@@ -260,8 +239,14 @@ body .swiper-pagination-bullets-dynamic {
         }
 
         .ajax-loader {
-            top: 0%;
-            left: 80%;
+            top: -15%;
+            left: 60%;
+            transform: rotate(35deg) translate(-50%, 0%);
+            font-size: 76px;
+        }
+
+        .ajax-loader .paw:nth-child(even) {
+            transform: rotate(10deg) translate(125%, 0);
         }
 }
 
@@ -301,10 +286,16 @@ body .swiper-pagination-bullets-dynamic {
         border-color: rgba(2, 6, 10, 0.6);
     }
 
-    .ajax-loader {
-        top: 0%;
-        left: 65%;
-    }
+        .ajax-loader {
+            top: -15%;
+            left: 88%;
+            transform: rotate(70deg) translate(-50%, 0%);
+            font-size: 100px;
+        }
+
+        .ajax-loader .paw:nth-child(even) {
+            transform: rotate(10deg) translate(140%, 0);
+        }
 }
 
 

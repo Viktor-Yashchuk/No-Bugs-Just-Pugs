@@ -1,7 +1,13 @@
 <header class="header">
   <div class="container header-container">
     <a class="header-logo" href="./index.html" aria-label="Homepage">
-      <img src="" alt="Company logo" width="" height="" />
+      <img
+        class="header-logo-img"
+        src="../img/company-logo.svg"
+        alt="Company logo"
+        width="158"
+        height="52"
+      />
     </a>
     <nav class="header-nav">
       <ul class="header-nav-list">
@@ -20,28 +26,29 @@
       </ul>
     </nav>
     <a class="header-button" href="#pets">Взяти друга</a>
-    <button class="burger-btn" type="button" data-mobile-open>
+
+    <button class="burger-btn" type="button">
       <svg class="burger-btn-icon" width="24" height="24">
-        <use href="/img/svg/symbol-defs.svg#icon-menu"></use>
+        <use href="../img/sprite.svg#icon-menu"></use>
       </svg>
     </button>
   </div>
 
-  <div class="mobile-menu" data-mobile>
+  <div class="mobile-menu">
     <div class="container mobile-menu-container">
       <div class="mobile-menu-header">
-        
-        <a class="header-logo" href="./index.html">
+        <a class="header-logo" href="./index.html" aria-label="Homepage">
           <img
-            src="/img/header/company-logo.svg"
+            class="header-logo-img"
+            src="../img/company-logo.svg"
             alt="Company logo"
-            width="84"
-            height="36"
+            width="158"
+            height="52"
           />
         </a>
-        <button class="mobile-menu-btn" type="button" data-mobile-close>
+        <button class="mobile-menu-btn" type="button">
           <svg class="mobile-menu-btn-icon" width="24" height="24">
-            <use href="/img/svg/symbol-defs.svg#icon-x"></use>
+            <use href="../img/sprite.svg#icon-close"></use>
           </svg>
         </button>
       </div>
@@ -61,7 +68,7 @@
           </li>
         </ul>
       </nav>
-      <a class="header-button" href="#pets">Взяти друга</a>
+      <a class="mobile-menu-button" href="#pets">Взяти друга</a>
     </div>
   </div>
 </header>

@@ -28,7 +28,7 @@ const ctgsRender = arr => {
   return arr
     .map(
       el =>
-        `<button class="pets-ctgs-item" data-id="${el._id}" type="button">${el.name}</button>`
+        `<li class="pets-ctgs-item"><button class="pets-ctgs-btn" data-id="${el._id}" type="button">${el.name}</button></li>`
     )
     .join('');
 };
@@ -39,7 +39,7 @@ const ctgsInit = async () => {
   try {
     const ctgs = await ctgsGet();
     refs.ctgsList.innerHTML = ctgsRender(ctgs.data);
-    const firstBtn = document.querySelector('.pets-ctgs-item');
+    const firstBtn = document.querySelector('.pets-ctgs-btn');
     firstBtn.classList.add('active');
     firstBtn.dataset.id = 'all';
   } catch (err) {
@@ -103,7 +103,7 @@ const clearPets = () => (refs.petsList.innerHTML = '');
 //change active category css
 
 const changeActiveCtg = btn => {
-  const allBtns = document.querySelectorAll('.pets-ctgs-item');
+  const allBtns = document.querySelectorAll('.pets-ctgs-btn');
   allBtns.forEach(el => el.classList.remove('active'));
   btn.classList.add('active');
 };

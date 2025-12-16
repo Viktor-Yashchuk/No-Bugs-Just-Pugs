@@ -105,7 +105,6 @@ const getCtgs = async () =>
 
 //render categories
 const renderCtgs = arr => {
-  arr = arr.reverse();
   arr.unshift({ name: 'Всі' });
 
   return arr

@@ -2,6 +2,8 @@ import axios from 'axios';
 import { refs } from './refs.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.css';
 
 //user device width check
 
@@ -23,10 +25,7 @@ let totalItems;
 let userDevice = checkWidth();
 
 let limit = setLimit();
-
-const isMobile = () => {
-  return userDevice === 'mobile';
-};
+let isMobile = userDevice === 'mobile';
 
 //toast
 const toastError = mess =>
@@ -39,114 +38,66 @@ const toastError = mess =>
 
 //pagination
 
-function renderPagination() {
-  const totalPages = Math.ceil(totalItems / limit);
-  if (totalPages <= 1) return;
-
-  let markup = '';
-
-  markup += `<li>
-      <button class="pagination-btn-arrow" data-action="prev" aria-label="Попередня сторінка" ${
-        currentPage === 1 ? 'disabled' : ''
-      }><svg class="arrow-icon" width="24" height="24">
-          <use href="/img/sprite.svg#icon-arrow-back"></use>
-        </svg>
-      </button>
-    </li>`;
-
-  if (currentPage === 1) {
-    for (let i = 1; i <= Math.min(3, totalPages); i++) {
-      markup += pageButton(i);
-    }
-    if (totalPages > 3) {
-      markup += `<li class="dots">…</li>`;
-      markup += pageButton(totalPages);
-    }
-  } else if (currentPage === totalPages) {
-    markup += pageButton(1);
-    if (totalPages > 3) {
-      markup += `<li class="dots">…</li>`;
-    }
-    for (let i = totalPages - 2; i <= totalPages; i++) {
-      if (i > 1) {
-        markup += pageButton(i);
-      }
-    }
-  } else {
-    markup += pageButton(1);
-
-    if (currentPage > 3) {
-      markup += `<li class="dots">…</li>`;
-    }
-
-    for (let i = currentPage - 1; i <= currentPage + 1; i += 1) {
-      if (i > 1 && i < totalPages) {
-        markup += pageButton(i);
-      }
-    }
-
-    if (currentPage < totalPages - 2) {
-      markup += `<li class="dots">…</li>`;
-    }
-
-    if (totalPages > 1) {
-      markup += pageButton(totalPages);
-    }
+const svgTemplate = str => {
+  if (str === 'prev') {
+    return `<svg width="24" height="24">
+      <use href="../img/sprite.svg#icon-arrow-back"></use>
+     </svg>`;
+  } else if (str === 'next') {
+    return `<svg width="24" height="24">
+        <use href="../img/sprite.svg#icon-arrow-forward"></use>
+       </svg>`;
   }
-
-  markup += `<li>
-      <button class="pagination-btn-arrow" data-action="next" aria-label="Наступна сторінка" ${
-        currentPage === totalPages ? 'disabled' : ''
-      }> <svg class="arrow-icon" width="24" height="24">
-          <use href="/img/sprite.svg#icon-arrow-forward"></use>
-        </svg>
-      </button>
-    </li>`;
-
-  refs.petsPagination.style.display = 'flex';
-  refs.petsPagination.innerHTML = markup;
-}
-
-function pageButton(pageNumber) {
-  return `
-    <li>
-      <button
-        class="pagination-btn ${currentPage === pageNumber ? 'active' : ''}"
-        aria-label="Сторінка ${pageNumber}"
-        data-page="${pageNumber}">
-        ${pageNumber}
-      </button>
-    </li>
-  `;
-}
-
-//pagination click
-
-const onPaginationClick = async e => {
-  const btn = e.target.closest('button');
-  if (!btn) return;
-
-  const totalPages = Math.ceil(totalItems / limit);
-
-  if (btn.dataset.action === 'prev' && currentPage > 1) {
-    currentPage -= 1;
-  }
-
-  if (btn.dataset.action === 'next' && currentPage < totalPages) {
-    currentPage += 1;
-  }
-
-  if (btn.dataset.page) {
-    currentPage = +btn.dataset.page;
-  }
-
-  clearPets();
-  hidePagination();
-  await initPets(currentPage, currentCtg);
-  renderPagination();
 };
 
-refs.petsPagination.addEventListener('click', onPaginationClick);
+const pagination = new Pagination('pagination', {
+  totalItems,
+  itemsPerPage: limit,
+  visiblePages: 4,
+  centerAlign: true,
+  template: {
+    moveButton: ({ type }) => {
+      if (type === 'prev')
+        return `<a href="#" class="tui-page-btn tui-prev">${svgTemplate(
+          'prev'
+        )}</a>`;
+      else if (type === 'next')
+        return `<a href="#" class="tui-page-btn tui-next">${svgTemplate(
+          'next'
+        )}</a>`;
+      else if (type === 'first')
+        return `<a href="#" class="tui-page-btn tui-first"></a>`;
+      else if (type === 'last')
+        return `<a href="#" class="tui-page-btn tui-last"></a>`;
+    },
+    disabledMoveButton: ({ type }) => {
+      if (type === 'prev')
+        return `<a href="#" class="tui-page-btn tui-prev tui-is-disabled">${svgTemplate(
+          'prev'
+        )}</a>`;
+      else if (type === 'next')
+        return `<a href="#" class="tui-page-btn tui-next tui-is-disabled">${svgTemplate(
+          'next'
+        )}</a>`;
+      else if (type === 'first')
+        return `<a href="#" class="tui-page-btn tui-first"></a>`;
+      else if (type === 'last')
+        return `<a href="#" class="tui-page-btn tui-last"></a>`;
+    },
+  },
+});
+
+//pagination functions
+
+const onClickPage = async ({ page }) => {
+  currentPage = page;
+  clearPets();
+  await initPets(currentPage, currentCtg);
+};
+
+pagination.on('afterMove', onClickPage);
+
+//update pagination
 
 //get categories
 const getCtgs = async () =>
@@ -245,8 +196,8 @@ const changeActiveCtg = btn => {
 const onClickCategory = async e => {
   if (e.target.nodeName !== 'BUTTON') return;
 
-  hideMoreBtn();
-  hidePagination();
+  if (isMobile) hideMoreBtn();
+  else if (!isMobile) hidePagination();
 
   changeActiveCtg(e.target);
   currentCtg = e.target.dataset.id === 'all' ? undefined : e.target.dataset.id;
@@ -255,8 +206,8 @@ const onClickCategory = async e => {
   currentPage = 1;
   await initPets(currentPage, currentCtg);
 
-  if (isMobile() && totalItems > limit) showMoreBtn();
-  else if (!isMobile()) renderPagination();
+  if (isMobile && totalItems > limit) showMoreBtn();
+  else if (!isMobile) showPagination();
 };
 
 refs.ctgsList.addEventListener('click', onClickCategory);
@@ -296,6 +247,11 @@ const showloader = () => {
   refs.petsLoader.style.display = 'block';
 };
 
+const showPagination = () => {
+  pagination.reset(totalItems);
+  refs.petsPagination.style.display = 'flex';
+};
+
 const hidePagination = () => {
   refs.petsPagination.style.display = 'none';
 };
@@ -316,7 +272,7 @@ const onResizePage = () => {
   initPets(currentPage, currentCtg);
 
   if (device === 'mobile' && currentPage * limit < totalItems) showMoreBtn();
-  else if (device !== 'mobile') renderPagination();
+  else if (device !== 'mobile') showPagination();
 };
 
 window.addEventListener('resize', onResizePage);
@@ -327,4 +283,4 @@ await initCtgs();
 await initPets(currentPage);
 
 if (userDevice === 'mobile' && totalItems > limit) showMoreBtn();
-else renderPagination();
+else showPagination();

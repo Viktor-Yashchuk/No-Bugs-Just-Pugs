@@ -36,73 +36,68 @@
 
 /* pagination */
 
-.container .tui-pagination {
-  display: none;
-  margin: 40px auto 42px auto;
-  height: 48px;
-
+.pets-pagination {
+  margin-top: 40px;
   justify-content: center;
+  align-items: center;
   gap: 4px;
 }
 
-.pets-section .container > .tui-pagination .tui-page-btn {
-  padding: 12px 0;
-  height: 100%;
+.pets-pagination li button {
+  height: 48px;
   width: 58px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
-  color: var(--color-neutral-darkest);
-  line-height: 1.5;
+  background-color: transparent;
 
   transition: border 250ms ease-in-out;
 }
 
-.container .tui-pagination .tui-page-btn.tui-first,
-.container .tui-pagination .tui-page-btn.tui-last {
-  display: none;
+.pets-pagination li button:hover,
+.pets-pagination li button:focus {
+  border-color: var(--color-neutral-light);
 }
 
-.pets-section .container > .tui-pagination .tui-page-btn:hover,
-.pets-section .container > .tui-pagination .tui-page-btn:focus {
-  border: 1px solid var(--color-neutral-light);
+.pets-pagination li button:active {
+  border-width: 2px;
 }
 
-.container .tui-pagination .tui-page-btn.tui-is-selected {
-  border: 1px solid var(--color-neutral-light);
-  background-color: transparent;
+.pagination-btn.active {
+  border-color: var(--color-neutral-light);
 }
 
-.container > .tui-pagination .tui-page-btn.tui-prev,
-.container > .tui-pagination .tui-page-btn.tui-next {
-  margin: 0;
+.pets-pagination li .pagination-btn-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 48px;
+
   border: 1px solid var(--color-mariner);
   background-color: var(--color-mariner-lighter);
 
-  transition: border-color 250ms ease-in-out;
+  transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
 }
 
-.container > .tui-pagination .tui-page-btn.tui-prev:hover,
-.container > .tui-pagination .tui-page-btn.tui-next:hover,
-.container > .tui-pagination .tui-page-btn.tui-prev:focus,
-.container > .tui-pagination .tui-page-btn.tui-prev:focus {
+.pets-pagination li .pagination-btn-arrow:hover,
+.pets-pagination li .pagination-btn-arrow:focus {
   border-color: var(--opacity-neutral-darkest-60);
 }
 
-.container > .tui-pagination .tui-page-btn.tui-is-disabled {
+.pets-pagination li .pagination-btn-arrow:active {
+  border-width: 1px;
+  box-shadow: inset 0 4px 6px -2px var(--shadow-1),
+    inset 0 12px 16px -4px var(--shadow-2);
+}
+
+.pets-pagination li .pagination-btn-arrow:disabled {
+  border-color: transparent;
   opacity: 0.4;
 }
 
-.container .tui-pagination .tui-ico-ellip {
-  margin: 0;
-  line-height: inherit;
-  align-self: end;
-  margin-bottom: 8px;
+.pets-pagination li .pagination-btn-arrow:disabled:active {
+  box-shadow: none;
 }
 
 /* mobile */

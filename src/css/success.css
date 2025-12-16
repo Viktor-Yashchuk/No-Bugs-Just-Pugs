@@ -2,10 +2,7 @@
 .success {
     overflow: hidden;
     position: relative;
-}
-
-.success-container {
-    min-width: 280px;
+    min-width: 320px;
 }
 
 .success-title {

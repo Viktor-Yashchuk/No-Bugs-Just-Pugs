@@ -130,24 +130,50 @@ const updateNavigationState = () => {
 swiper.on('slideChange', updateNavigationState);
 updateNavigationState();
 
-// const animationEl = document.querySelectorAll('.about-id');
-
-// if()
-
 swiper.on('slideChangeTransitionStart', () => {
-  document.querySelectorAll('.about-id').forEach(el => {
-    el.classList.remove('show');
-  });
+  document
+    .querySelectorAll('.about-id')
+    .forEach(el => el.classList.remove('show'));
+  document
+    .querySelectorAll('.about-overlay')
+    .forEach(el => el.classList.remove('fade-out'));
 });
+
 swiper.on('slideChangeTransitionEnd', () => {
   const activeSlide = swiper.slides[swiper.activeIndex];
+
   const text = activeSlide.querySelector('.about-id');
-  if (text) {
-    text.classList.add('show');
-  }
+  if (text) text.classList.add('show');
+
+  const overlay = activeSlide.querySelector('.about-overlay');
+  if (overlay) overlay.classList.add('fade-out');
 });
 
-const firstText = swiper.slides[swiper.activeIndex].querySelector('.about-id');
-if (firstText) {
-  firstText.classList.add('show');
-}
+const aboutSection = document.querySelector('.about');
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const activeSlide = swiper.slides[swiper.activeIndex];
+        const text = activeSlide.querySelector('.about-id');
+        const overlay = activeSlide.querySelector('.about-overlay');
+
+        if (text) {
+          text.classList.remove('show');
+          void text.offsetWidth;
+          text.classList.add('show');
+        }
+
+        if (overlay) {
+          overlay.classList.remove('fade-out');
+          void overlay.offsetWidth;
+          overlay.classList.add('fade-out');
+        }
+      }
+    });
+  },
+  { threshold: 0.7 }
+);
+
+observer.observe(aboutSection);

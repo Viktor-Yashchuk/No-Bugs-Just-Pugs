@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { refs } from './refs';
 import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -71,20 +71,25 @@ const renderFeedback = feedbacks => {
 };
 
 const swiper = new Swiper('.success-swiper', {
-    modules: [Navigation, Pagination],
+    modules: [Navigation, Pagination, Keyboard, Mousewheel],
     spaceBetween: 32,
     slidesPerView: 1,
     loop: false,
     wrapperClass: 'success-list',
     slideClass: 'success-item',
-    watchOverflow: true,
+    keyboard: {
+        enabled: true,
+        onlyInViewport: true,
+    },
+    mousewheel: {
+        enabled: true,
+    },
     pagination: {
         el: '.success-swiper-pagination',
         type: 'bullets',
         clickable: true,
         dynamicBullets: true,
-        dynamicMainBullets: 2,
-        resistance: true,
+        dynamicMainBullets: 4,
     },
     navigation: {
         nextEl: '.success-button-forward',

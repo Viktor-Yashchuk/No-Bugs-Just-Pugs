@@ -7,7 +7,6 @@
 }
 
 .faq-title {
-  font-size: 36px;
   margin-bottom: 40px;
 }
 
@@ -18,15 +17,16 @@
 }
 
 .faq-trigger {
-  width: 100%;
   display: flex;
-  gap: 24px;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   border: none;
   background: transparent;
   cursor: pointer;
+  width: 100%;
   padding: 20px 24px;
+  line-height: 0.5;
 }
 
 .faq-trigger-text {
@@ -36,21 +36,12 @@
   font-weight: 700;
 }
 
-.faq-trigger::after {
-  display: none;
-}
-
-.ac-trigger-icon {
+.faq-svg {
   transition: transform 250ms ease-in-out;
 }
 
 .ac.is-active .faq-svg {
-  transform: rotate(45deg);
-}
-
-.faq-panel {
-  overflow: hidden;
-  transition: height 250ms ease-in-out;
+  transform: rotate(135deg);
 }
 
 .faq-form {
@@ -59,6 +50,7 @@
 
 .faq-text {
   margin-bottom: 12px;
+  font-size: 14px;
 }
 
 .ac-text-list {
@@ -89,11 +81,6 @@
   .faq-title {
     margin-bottom: 80px;
   }
-
-  .faq-trigger {
-    align-items: center;
-    min-height: 64px;
-  }
 }
 
 /* ===================== DESKTOP (>= 1440px) ===================== */
@@ -101,17 +88,10 @@
   body .faq-container.container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 1440px;
     align-items: center;
-    justify-content: center;
   }
   body .faq-wrapper.accordion-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    max-width: 865px;
+    max-width: 864px;
     width: 100%;
   }
 
@@ -130,5 +110,13 @@
 
   .faq-list-item {
     font-size: 16px;
+  }
+
+  .faq-text.ac-text {
+    font-size: 16px;
+  }
+
+  .faq-form.ac-form:last-child {
+    padding: 0 23px 24px;
   }
 }

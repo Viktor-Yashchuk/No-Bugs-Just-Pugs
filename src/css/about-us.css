@@ -65,7 +65,7 @@
     justify-content: space-between;
 }
 
-body .about .swiper-pagination {
+body .about .swiper-pagination.left {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -79,6 +79,12 @@ body .about .swiper-horizontal>.swiper-pagination-bullets,
         left: 0;
         transform: translateX(0);
         white-space: nowrap;
+    }
+}
+
+body .swiper-pagination-bullets-dynamic {
+    .swiper-pagination-bullet {
+        position: static;
     }
 }
 
@@ -169,7 +175,7 @@ body .about .swiper-pagination-bullet-active {
         right: 0;
     }
 
-    body .about .swiper-pagination {
+    body .about .swiper-pagination.center {
         position: static;
         margin-top: 24px;
         justify-content: center;

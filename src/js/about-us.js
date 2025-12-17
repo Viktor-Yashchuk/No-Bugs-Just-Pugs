@@ -115,6 +115,20 @@ const swiper = new Swiper('.about-mySwiper', {
   },
 });
 
+function updatePaginationPosition() {
+  const paginationEl = document.querySelector('.about .swiper-pagination');
+  if (window.innerWidth < 768) {
+    paginationEl.classList.remove('center');
+    paginationEl.classList.add('left');
+  } else {
+    paginationEl.classList.remove('left');
+    paginationEl.classList.add('center');
+  }
+}
+
+updatePaginationPosition();
+window.addEventListener('resize', updatePaginationPosition);
+
 const updateNavigationState = () => {
   if (swiper.isEnd) {
     aboutBtnForward.classList.add('about-btn-disabled');

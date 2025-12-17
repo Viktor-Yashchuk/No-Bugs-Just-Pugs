@@ -174,7 +174,7 @@ const initCtgs = async () => {
     firstBtn.classList.add('active');
     firstBtn.dataset.id = 'all';
   } catch (err) {
-    toastError(err);
+    toastError(err.message);
   }
 };
 
@@ -192,7 +192,7 @@ const getPets = async (page, categoryId) => {
 const renderPets = arr =>
   arr
     .map(
-      el => `<li class="pets-item">
+      el => `<li class="pets-item" role="listitem">
     <div><img class="pets-img" src="${el.image}" alt="${el.species}">
     <p class="pets-species">${el.species}</p>
     <h3 class="pets-name">${el.name}</h3>
@@ -213,18 +213,20 @@ const renderPets = arr =>
 
 const initPets = async (page, categoryId) => {
   try {
-    showloader();
+    showLoader();
     const pets = await getPets(page, categoryId);
     hideLoader();
 
-    refs.petsList.insertAdjacentHTML(
-      'beforeend',
-      renderPets(pets.data.animals)
-    );
+    if (isMobile()) {
+      refs.petsList.insertAdjacentHTML(
+        'beforeend',
+        renderPets(pets.data.animals)
+      );
+    } else refs.petsList.innerHTML = renderPets(pets.data.animals);
 
     totalItems = pets.data.totalItems;
   } catch (err) {
-    toastError(err);
+    toastError(err.message);
   }
 };
 
@@ -250,9 +252,9 @@ const onClickCategory = async e => {
 
   changeActiveCtg(e.target);
   currentCtg = e.target.dataset.id === 'all' ? undefined : e.target.dataset.id;
+  currentPage = 1;
 
   clearPets();
-  currentPage = 1;
   await initPets(currentPage, currentCtg);
 
   if (isMobile() && totalItems > limit) showMoreBtn();
@@ -292,7 +294,7 @@ const hideLoader = () => {
 
 //show loader
 
-const showloader = () => {
+const showLoader = () => {
   refs.petsLoader.style.display = 'block';
 };
 
@@ -326,5 +328,5 @@ window.addEventListener('resize', onResizePage);
 await initCtgs();
 await initPets(currentPage);
 
-if (userDevice === 'mobile' && totalItems > limit) showMoreBtn();
-else renderPagination();
+if (isMobile() && totalItems > limit) showMoreBtn();
+else if (!isMobile()) renderPagination();

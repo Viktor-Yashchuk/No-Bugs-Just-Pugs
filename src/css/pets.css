@@ -4,7 +4,7 @@
   width: 100px;
   height: 100px;
   display: none;
-  margin: 10px auto;
+  margin: 10px 0;
   position: relative;
 }
 .pets-loader::after,
@@ -37,7 +37,6 @@
 /* pagination */
 
 .pets-pagination {
-  margin-top: 40px;
   justify-content: center;
   align-items: center;
   gap: 4px;
@@ -103,21 +102,21 @@
 
 /* mobile */
 
-.pets-section {
+.pets-container {
   padding-top: 64px;
   padding-bottom: 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .pets-title {
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-
   margin-bottom: 16px;
 }
 
 .pets-subtitle {
   text-align: center;
-  line-height: 1.5;
-
   margin-bottom: 32px;
 }
 
@@ -160,6 +159,8 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  margin-bottom: 40px;
 }
 
 .pets-item {
@@ -265,7 +266,6 @@
   background-color: var(--color-mariner-dark);
 
   padding: 12px 0;
-  margin-top: 40px;
 
   transition: background-color 250ms ease-in-out, color 250ms ease-in-out,
     box-shadow 250ms ease-in-out;
@@ -282,7 +282,7 @@
 @media only screen and (min-width: 768px) {
   .pets-ctgs-list {
     width: 579px;
-    margin: 0 auto 32px auto;
+    margin-bottom: 32px;
   }
 
   .pets-list {
@@ -301,7 +301,7 @@
 /* desktop */
 
 @media only screen and (min-width: 1440px) {
-  .pets-section {
+  .pets-container {
     padding-top: 80px;
     margin-bottom: 40px;
   }
@@ -312,6 +312,7 @@
 
   .pets-subtitle {
     font-size: 18px;
+    margin-bottom: 40px;
   }
 
   .pets-ctgs-list {

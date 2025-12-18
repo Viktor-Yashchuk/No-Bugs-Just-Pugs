@@ -8,6 +8,11 @@
     z-index: 1000;
 }
 
+.body-lock {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+}
+
 .details-modal {
     min-width: 320px;
     max-width: 335px;

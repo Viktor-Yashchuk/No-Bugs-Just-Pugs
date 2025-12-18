@@ -40,8 +40,7 @@ function openPetModal(pet) {
   document.body.insertAdjacentHTML('beforeend', markup);
 
   const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-  document.body.style.overflow = 'hidden';
-  document.body.style.paddingRight = scrollBarWidth ? `${scrollBarWidth}px` : '';
+  document.body.classList.add('body-lock');
 
   const backdrop = document.querySelector('[data-details-modal-backdrop]');
   const closeBtn = backdrop.querySelector('[data-details-modal-close]');
@@ -70,8 +69,7 @@ function openPetModal(pet) {
 
 function closePetModal(backdrop) {
   backdrop.remove();
-  document.body.style.overflow = '';
-  document.body.style.paddingRight = '';
+  document.body.classList.remove('body-lock');
 }
 
 refs.petsList.addEventListener('click', e => {

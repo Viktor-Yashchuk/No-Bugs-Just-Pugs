@@ -1,139 +1,123 @@
-import axios from "axios";
-import iziToast from "izitoast";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import { BASE } from './config';
 
-const refs = {
-  modal: document.querySelector("[data-modal]"),
-  closeBtn: document.querySelector("[data-modal-close]"),
-  form: document.querySelector("#order-modal-form"),
-};
+function createOrderModalMarkup() {
+  return `
+    <div class="order-modal-overlay" data-order-modal-backdrop>
+      <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+        <button class="order-modal-close-btn" type="button" aria-label="Закрити" data-order-modal-close>
+          <svg class="icon-close" width="24" height="24">
+            <use href="${BASE}sprite.svg#icon-close"></use>
+          </svg>
+        </button>
 
-let animalId = null; // сюди пізніше прийде id тварини
+        <h2 id="order-modal-title" class="order-modal-title">Залишіть заявку на знайомство</h2>
 
-/* ================= MODAL LOGIC ================= */
+        <form class="order-modal-form" novalidate method="post" data-order-modal-form>
+          <label class="order-modal-label" for="username">
+            Ім’я*
+            <input
+              class="order-modal-input"
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Андрій"
+              required
+              autocomplete="off"
+            />
+          </label>
 
-function openModal(id) {
-  animalId = id ?? null;
-  refs.modal.classList.add("is-open");
-  document.body.classList.add("no-scroll");
-  document.addEventListener("keydown", onEscKeyPress);
+          <label class="order-modal-label" for="phone">
+            Телефон*
+            <input
+              class="order-modal-input"
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+38 (095) 555 99 22"
+              required
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="order-modal-label" for="message">
+            Напишіть ваш коментар
+            <textarea
+              class="order-modal-input-textarea"
+              name="message"
+              id="message"
+              placeholder="введіть текст"
+              autocomplete="off"
+            ></textarea>
+          </label>
+
+          <button class="order-modal-send-button" type="submit">Надіслати заявку</button>
+        </form>
+      </div>
+    </div>`;
 }
 
-function closeModal() {
-  refs.modal.classList.remove("is-open");
-  document.body.classList.remove("no-scroll");
-  document.removeEventListener("keydown", onEscKeyPress);
-}
+export function openOrderModal(animalId) {
+  const markup = createOrderModalMarkup();
+  document.body.insertAdjacentHTML('beforeend', markup);
+  document.body.classList.add('body-lock'); // блокуємо скрол
 
-/* Закриття по Х */
-refs.closeBtn.addEventListener("click", closeModal);
+  const backdrop = document.querySelector('[data-order-modal-backdrop]');
+  const closeBtn = backdrop.querySelector('[data-order-modal-close]');
+  const form = backdrop.querySelector('[data-order-modal-form]');
 
-/* Закриття по кліку на overlay */
-refs.modal.addEventListener("click", e => {
-  if (e.target === e.currentTarget) {
-    closeModal();
-  }
-});
 
-/* Закриття по Escape */
-function onEscKeyPress(e) {
-  if (e.key === "Escape") {
-    closeModal();
-  }
-}
-
-/* ================= FORM SUBMIT ================= */
-
-refs.form.addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const { username, phone, message } = e.target.elements;
-
-  if (!username.value || !phone.value) return;
-
-  const data = {
-    name: username.value.trim(),
-    phone: phone.value.trim(),
-    animalId,
-    comment: message.value.trim(),
-  };
-
-  try { await axios.post(
-      "https://paw-hut.b.goit.study/api/orders",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    iziToast.success({
-      title: "Success",
-      message: "Ви знайшли собі найкращого друга!",
-      position: "topLeft",
-    });
-
-    e.target.reset();
-    closeModal();
-
-  } catch (error) {
-    iziToast.error({
-      title: "Error",
-      message: "В цей раз ви не змогли знайти друга. Спробуйте ще раз.",
-      position: "topLeft",
-    });
-  }
-});
-
-/* ================= EXPORT ================= */
-
-  // Коли зʼявиться кнопка відкриття:
-  const adoptButtons = document.querySelectorAll("[data-details-modal-adopt]");
-  adoptButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.animalId;
-      openModal(id);
-    });
+  closeBtn.addEventListener('click', () => closeOrderModal(backdrop));
+  backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) closeOrderModal(backdrop);
+  });
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeOrderModal(backdrop);
   });
 
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('username'),
+      phone: formData.get('phone'),
+      comment: formData.get('message'),
+      animalId: animalId, 
+    };
+
+    try {
+      const response = await fetch('https://paw-hut.b.goit.study/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error('Помилка відправки заявки');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Заявку надіслано!',
+        text: 'Ми скоро з вами зв’яжемося.',
+      });
+
+      form.reset();
+      closeOrderModal(backdrop);
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Помилка',
+        text: err.message,
+      });
+    }
+  });
+}
 
 
-
-
-
-// import axios from "axios";
-// import iziToast from "izitoast";
-
-// const refs = {
-//   modal: document.querySelector("[data-modal]"),
-//   closeModalBtn: document.querySelector("[data-modal-close]"),
-//   form: document.querySelector("#order-modal-form"),
-// };
- 
-// formElem.addEventListener ("submit", async e => {
-//   e.preventDefault();
-//   const { email, phone } = e.target.elements;
-//   const formData = {
-//     name: userName.value.trim(),
-//     phone: phone.value.trim(),
-//     animalId,
-//     comment: message.value.trim(),
-//   }
-//   try {const response = await axios.post ("https://paw-hut.b.goit.study/api/orders", formData);
-
-// const orderData = response.data;
-// console.log(orderData);
-// iziToast.success({
-//     title: "Success", 
-//     message: `Ви знайшли собі найкращого друга!`,
-//     position: `topLeft`,
-// });
-// e.target.reset();
-// closeModal();
-
-// } catch (error) {
-//     iziToast.error({
-//         title: "Error", 
-//         message: `В цей раз ви не змогли знайти друга. Спробуйте ще раз.`,
-//         position: `topLeft`,
-//     });
-// };
-// });
+function closeOrderModal(backdrop) {
+  backdrop.remove();
+  document.body.classList.remove('body-lock'); 
+}
 
 

@@ -10,7 +10,7 @@ const aboutBtnBack = document.querySelector('.about-swiper-button-prev');
 const data = [
   {
     id: 1,
-    imageURL: './img/about-us/mobile/slide-p1-mob.webp',
+    imageURL: '/src/public/about-us/',
     description:
       'Все почалося у 2015 році з кількох небайдужих людей та одного врятованого собаки. Сьогодні ми — один з найбільших притулків у регіоні, але наша мета незмінна: дати другий шанс тим, кого зрадили.',
   },
@@ -28,13 +28,13 @@ const data = [
   },
   {
     id: 4,
-    imageURL: '/about-us/mobile/slide-p4-mob.webp',
+    imageURL: '/img/about-us/mobile/slide-p4-mob.webp',
     description:
       'Ми створили безпечний та комфортний простір. Кожна тварина отримує якісне харчування, своєчасну ветеринарну допомогу, проходить соціалізацію та гуляє на спеціально обладнаних майданчиках.',
   },
   {
     id: 5,
-    imageURL: '../about-us/mobile/slide-p5-mob.webp',
+    imageURL: '/img/about-us/mobile/slide-p5-mob.webp',
     description:
       'Ваша допомога — безцінна. Ви можете взяти тваринку додому, стати волонтером, допомогти фінансово або інформаційно. Кожен маленький внесок наближає нас до великої мети — світу без безпритульних тварин.',
   },

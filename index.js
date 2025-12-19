@@ -32,8 +32,8 @@ import{i as I,a as $,S as C,b as j,N as H,P as N,K as W,A as X,R as Z,M as ee}fr
     <div class="order-modal-overlay" data-order-modal-backdrop>
       <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
         <button class="order-modal-close-btn" type="button" aria-label="Закрити" data-order-modal-close>
-          <svg class="icon-close" width="24" height="24">
-            <use href="${d}sprite.svg#icon-close"></use>
+          <svg class="icon-close" width="14" height="14">
+            <use href="${d}sprite.svg#icon-close2"></use>
           </svg>
         </button>
 
@@ -67,12 +67,12 @@ import{i as I,a as $,S as C,b as j,N as H,P as N,K as W,A as X,R as Z,M as ee}fr
           </label>
 
           <label class="order-modal-label" for="message">
-            Напишіть ваш коментар
+            Коментар
             <textarea
               class="order-modal-input-textarea"
               name="message"
               id="message"
-              placeholder="введіть текст"
+              placeholder="Напишіть ваш коментар"
               autocomplete="off"
             ></textarea>
           </label>

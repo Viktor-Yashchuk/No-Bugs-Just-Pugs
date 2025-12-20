@@ -19,7 +19,7 @@
   border: 1px solid transparent;
   border-radius: 8px;
   background-color: transparent;
-  transition: border 250ms ease-in-out;
+  transition: border 500ms ease-in-out;
 }
 
 .pets-pagination li button:hover,
@@ -42,7 +42,7 @@
   width: 48px;
   border: 1px solid var(--color-mariner);
   background-color: var(--color-mariner-lighter);
-  transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
+  transition: border 500ms ease-in-out, box-shadow 500ms ease-in-out;
 }
 
 .pets-pagination li .pagination-btn-arrow:hover,
@@ -132,6 +132,13 @@
   background-color: var(--color-mariner-lighter);
   border-radius: 16px;
   padding: 12px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: transform 500ms ease-in-out;
+}
+
+.pets-item:hover {
+  transform: scale(1.02);
 }
 
 .pets-img {
@@ -206,7 +213,7 @@
   color: inherit;
   padding: 10px 0;
   margin: auto auto 0;
-  transition: background-color 250ms ease-in-out, box-shadow 250ms ease-in-out;
+  transition: background-color 500ms ease-in-out, box-shadow 500ms ease-in-out;
 }
 
 .pets-modal-btn:hover,
@@ -230,8 +237,8 @@
   border: 1px solid var(--color-mariner-dark);
   background-color: var(--color-mariner-dark);
   padding: 12px 0;
-  transition: background-color 250ms ease-in-out, color 250ms ease-in-out,
-    box-shadow 250ms ease-in-out;
+  transition: background-color 500ms ease-in-out, color 500ms ease-in-out,
+    box-shadow 500ms ease-in-out;
 }
 
 .pets-load:hover,

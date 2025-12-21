@@ -9,4 +9,18 @@ export const refs = {
   petsLoadBtn: document.querySelector('.pets-load-btn'),
   petsLoader: document.querySelector('.pets-loader'),
   petsPagination: document.querySelector('.pets-pagination'),
+  aboutSection: document.querySelector('.about'),
+  aboutBtnForward: document.querySelector('.about-swiper-button-next'),
+  aboutBtnBack: document.querySelector('.about-swiper-button-prev'),
+  aboutSwiperWrapper: document.querySelector('.about-swiper-wrapper'),
+  aboutPaginationElem: document.querySelector('.about .swiper-pagination'),
+  header: document.querySelector('.header'),
+  headerBurgerBtn: document.querySelector('.burger-btn'),
+  headerMobileMenu: document.querySelector('.mobile-menu'),
+  headerMobileLinks: document.querySelectorAll(
+    '.mobile-menu-nav-link, .mobile-menu-button'
+  ),
+  headerBurgerTopLine: document.querySelector('.mobile-burger-menu-top-line'),
+  headerBurgerMidLine: document.querySelector('.mobile-burger-menu-mid-line'),
+  headerBurgerBotLine: document.querySelector('.mobile-burger-menu-bot-line'),
 };

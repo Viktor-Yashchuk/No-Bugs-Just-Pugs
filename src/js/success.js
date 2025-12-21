@@ -135,7 +135,7 @@ async function loadedSuccessSection() {
   } catch (err) {
     iziToast.error({
       message: 'Error',
-      position: 'center',
+      position: 'topRight',
     });
   }
 }

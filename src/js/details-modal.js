@@ -52,8 +52,12 @@ function openPetModal(pet) {
   document.body.classList.add('body-lock');
 
   const backdrop = document.querySelector('[data-details-modal-backdrop]');
+  const modal = backdrop.querySelector('.details-modal');
   const closeBtn = backdrop.querySelector('[data-details-modal-close]');
   const adoptBtn = backdrop.querySelector('[data-details-modal-adopt]');
+
+  modal.setAttribute('tabindex', '-1');
+  modal.focus();
 
   closeBtn.addEventListener('click', () => closePetModal(backdrop));
 

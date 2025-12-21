@@ -1,8 +1,5 @@
 import { refs } from './refs';
 
-const burgerMidLine = document.querySelector('.mobile-burger-menu-mid-line');
-const burgerBotLine = document.querySelector('.mobile-burger-menu-bot-line');
-
 const onEscPress = event => {
   if (event.key === 'Escape') {
     closeMobileMenu();

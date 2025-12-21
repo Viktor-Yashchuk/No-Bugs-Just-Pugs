@@ -63,6 +63,7 @@ refs.aboutSwiperWrapper.innerHTML = aboutRender;
 
 const swiper = new Swiper('.about-mySwiper', {
   modules: [Navigation, Pagination, Keyboard],
+  speed: 1000,
   loop: false,
   slidesPerView: 1,
   spaceBetween: 10,

@@ -49,6 +49,7 @@ async function loadedSuccessSection() {
 
     const successSwiper = new Swiper('.success-swiper', {
       modules: [Navigation, Keyboard, Mousewheel],
+      speed: 1000,
       spaceBetween: 32,
       slidesPerView: 1,
       loop: false,

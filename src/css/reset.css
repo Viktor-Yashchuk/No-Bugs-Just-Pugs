@@ -26,7 +26,6 @@ a {
 }
 
 button {
-  /* cursor: pointer; */
   font-family: inherit;
   cursor: url('/public/cursor.svg'), pointer;
 }

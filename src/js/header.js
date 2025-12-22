@@ -77,6 +77,7 @@ const sections = document.querySelectorAll('section[id]');
 
 let activeLink = null;
 let isScrollingByClick = false;
+let scrollTargetId = null;
 
 const resetLinks = () => {
   headerLinks.forEach(link => {
@@ -85,51 +86,68 @@ const resetLinks = () => {
   activeLink = null;
 };
 
+const activateLink = link => {
+  headerLinks.forEach(l => {
+    l.classList.remove('is-active', 'is-inactive');
+  });
+  link.classList.add('is-active');
+  activeLink = link;
+};
+
+const handleClickLink = link => {
+  const targetId = link.getAttribute('href')?.slice(1);
+  if (!targetId) return;
+
+  const targetSection = document.getElementById(targetId);
+  if (!targetSection) return;
+
+  const isSameSection = activeLink?.getAttribute('href') === `#${targetId}`;
+
+  if (isSameSection) {
+    targetSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+    link.blur();
+    return;
+  }
+
+  isScrollingByClick = true;
+  scrollTargetId = targetId;
+
+  const headerLink = document.querySelector(
+    `.header-nav-link[href="#${targetId}"]`
+  );
+
+  if (headerLink) {
+    headerLinks.forEach(l => {
+      l.classList.toggle('is-active', l === headerLink);
+      l.classList.toggle('is-inactive', l !== headerLink);
+    });
+    activeLink = headerLink;
+  }
+
+  targetSection.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  });
+
+  link.blur();
+};
+
+[...headerLinks, ...footerLinks].forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    handleClickLink(link);
+  });
+});
+
 window.addEventListener('scroll', () => {
   if (window.scrollY === 0) {
     resetLinks();
     isScrollingByClick = false;
+    scrollTargetId = null;
   }
-});
-
-const activateLink = link => {
-  resetLinks();
-  activeLink = link;
-  link.classList.add('is-active');
-};
-
-const handleClickLink = link => {
-  isScrollingByClick = true;
-
-  const targetId = link.getAttribute('href').slice(1);
-  const headerLink = document.querySelector(`.header-nav-link[href="#${targetId}"]`);
-
-  if (headerLink) {
-    activateLink(headerLink);
-
-    headerLinks.forEach(l => {
-      if (l !== headerLink) l.classList.add('is-inactive');
-    });
-  }
-
-  const targetSection = document.getElementById(targetId);
-  if (targetSection) {
-    targetSection.scrollIntoView({ behavior: 'smooth' });
-  }
-};
-
-headerLinks.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    handleClickLink(link);
-  });
-});
-
-footerLinks.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    handleClickLink(link);
-  });
 });
 
 const observer = new IntersectionObserver(
@@ -139,26 +157,19 @@ const observer = new IntersectionObserver(
 
       const id = entry.target.id;
       const link = document.querySelector(`.header-nav-link[href="#${id}"]`);
+      if (!link) return;
 
-      
-      if (!link) {
-        resetLinks();
-        isScrollingByClick = false;
-        return;
-      }
+      if (isScrollingByClick && id !== scrollTargetId) return;
 
-      if (!isScrollingByClick) {
-        activateLink(link);
-        return;
-      }
+      isScrollingByClick = false;
+      scrollTargetId = null;
 
-      if (link === activeLink) {
-        headerLinks.forEach(l => l.classList.remove('is-inactive'));
-        isScrollingByClick = false;
-      }
+      activateLink(link);
     });
   },
-  { threshold: 0.3 }
+  {
+    threshold: 0.35,
+  }
 );
 
 sections.forEach(section => observer.observe(section));

@@ -1,5 +1,4 @@
 import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
 import { BASE } from './config';
 
 function createOrderModalMarkup() {
@@ -81,13 +80,13 @@ export function openOrderModal(animalId) {
 
   function sanitizeName(value) {
     return value
-      .replace(ALLOWED_CHARS, '')    
-      .replace(/\s+/g, ' ')          
-      .replace(/-+/g, '-')            
+      .replace(ALLOWED_CHARS, '')
+      .replace(/\s+/g, ' ')
+      .replace(/-+/g, '-')
       .trim();
   }
 
-  nameInput.addEventListener('input', (e) => {
+  nameInput.addEventListener('input', e => {
     const el = e.target;
     const oldValue = el.value;
     const oldPos = el.selectionStart;
@@ -101,7 +100,7 @@ export function openOrderModal(animalId) {
     el.setSelectionRange(newPos, newPos);
   });
 
-  nameInput.addEventListener('paste', (e) => {
+  nameInput.addEventListener('paste', e => {
     e.preventDefault();
     const text = (e.clipboardData || window.clipboardData).getData('text');
     const clean = sanitizeName(text);
@@ -119,7 +118,7 @@ export function openOrderModal(animalId) {
     el.setSelectionRange(caret, caret);
   });
 
-  nameInput.addEventListener('blur', (e) => {
+  nameInput.addEventListener('blur', e => {
     e.target.value = sanitizeName(e.target.value);
   });
 
@@ -166,31 +165,35 @@ export function openOrderModal(animalId) {
     commentCounter.textContent = `${length}/300`;
 
     if (length === 0) {
-    commentError.textContent = '';
-    commentInput.classList.remove('invalid');
-  } else if (length < 5) {
-    commentError.textContent = 'Коментар має бути не менше 5 символів';
-    commentInput.classList.add('invalid');
-  } else if (length > 300) {
-    commentError.textContent = 'Коментар має бути не більше 300 символів';
-    commentInput.classList.add('invalid');
-  } else {
-    commentError.textContent = '';
-    commentInput.classList.remove('invalid');
-  }
+      commentError.textContent = '';
+      commentInput.classList.remove('invalid');
+    } else if (length < 5) {
+      commentError.textContent = 'Коментар має бути не менше 5 символів';
+      commentInput.classList.add('invalid');
+    } else if (length > 300) {
+      commentError.textContent = 'Коментар має бути не більше 300 символів';
+      commentInput.classList.add('invalid');
+    } else {
+      commentError.textContent = '';
+      commentInput.classList.remove('invalid');
+    }
   }
 
   commentInput.addEventListener('input', validateComment);
   commentInput.addEventListener('blur', validateComment);
-  
-  const inputs = backdrop.querySelectorAll('.order-modal-input, .order-modal-input-textarea');
+
+  const inputs = backdrop.querySelectorAll(
+    '.order-modal-input, .order-modal-input-textarea'
+  );
   inputs.forEach(input => {
     input.addEventListener('input', () => {
       input.value = input.value.trim();
-      if (input.validity.valueMissing ||
-          input.validity.patternMismatch ||
-          input.validity.tooShort ||
-          input.validity.tooLong) {
+      if (
+        input.validity.valueMissing ||
+        input.validity.patternMismatch ||
+        input.validity.tooShort ||
+        input.validity.tooLong
+      ) {
         input.classList.add('invalid');
       } else {
         input.classList.remove('invalid');
@@ -198,10 +201,12 @@ export function openOrderModal(animalId) {
     });
 
     input.addEventListener('blur', () => {
-      if (input.validity.valueMissing ||
-          input.validity.patternMismatch ||
-          input.validity.tooShort ||
-          input.validity.tooLong) {
+      if (
+        input.validity.valueMissing ||
+        input.validity.patternMismatch ||
+        input.validity.tooShort ||
+        input.validity.tooLong
+      ) {
         input.classList.add('invalid');
       } else {
         input.classList.remove('invalid');
@@ -223,13 +228,14 @@ export function openOrderModal(animalId) {
     inputs.forEach(input => input.dispatchEvent(new Event('blur')));
 
     const cleanName = sanitizeName(nameInput.value);
-    const hasAtLeastTwoLetters = (cleanName.match(/[a-zA-Z\u0400-\u04FF]/g) || []).length >= 2;
+    const hasAtLeastTwoLetters =
+      (cleanName.match(/[a-zA-Z\u0400-\u04FF]/g) || []).length >= 2;
     if (!cleanName || !hasAtLeastTwoLetters) {
       Swal.fire({
         icon: 'warning',
         title: 'Перевірте ім’я',
         text: 'Ім’я має містити щонайменше 2 літери.',
-        background: 'var(--color-scheme-1-foreground)', 
+        background: 'var(--color-scheme-1-foreground)',
         confirmButtonColor: 'var(--color-mariner-dark)',
       });
       nameInput.focus();
@@ -242,7 +248,7 @@ export function openOrderModal(animalId) {
         icon: 'warning',
         title: 'Перевірте телефон',
         text: 'Формат телефону має бути 380XXXXXXXXX',
-        background: 'var(--color-scheme-1-foreground)', 
+        background: 'var(--color-scheme-1-foreground)',
         confirmButtonColor: 'var(--color-mariner-dark)',
       });
       phoneInput.focus();
@@ -252,16 +258,16 @@ export function openOrderModal(animalId) {
     const comment = commentInput.value.trim();
     validateComment();
     if (commentInput.classList.contains('invalid')) {
-    commentInput.focus();
-    return;
-  }
- 
+      commentInput.focus();
+      return;
+    }
+
     if (!form.checkValidity()) {
       Swal.fire({
         icon: 'warning',
         title: 'Перевірте форму',
         text: 'Будь ласка, заповніть усі поля правильно.',
-        background: 'var(--color-scheme-1-foreground)', 
+        background: 'var(--color-scheme-1-foreground)',
         confirmButtonColor: 'var(--color-mariner-dark)',
       });
       return;
@@ -271,7 +277,7 @@ export function openOrderModal(animalId) {
 
     const cleanCommentRaw = formData.get('message');
     const cleanComment = (cleanCommentRaw || '').trim();
-    
+
     const data = {
       name: cleanName,
       phone: normalizedPhone,
@@ -279,8 +285,8 @@ export function openOrderModal(animalId) {
     };
 
     if (cleanComment !== '') {
-  data.comment = cleanComment;
-}
+      data.comment = cleanComment;
+    }
 
     try {
       const response = await fetch('https://paw-hut.b.goit.study/api/orders', {
@@ -291,7 +297,8 @@ export function openOrderModal(animalId) {
 
       const result = await response.json().catch(() => null);
 
-      if (!response.ok) throw new Error(result?.message || 'Помилка відправки заявки');
+      if (!response.ok)
+        throw new Error(result?.message || 'Помилка відправки заявки');
 
       Swal.fire({
         icon: 'success',
@@ -320,24 +327,23 @@ export function openOrderModal(animalId) {
             No Bugs Just Pugs</a>
 		   </div>
       </div> `,
-        background: 'var(--color-scheme-1-foreground)', 
+        background: 'var(--color-scheme-1-foreground)',
         confirmButtonColor: 'var(--color-mariner-dark)',
         showClass: {
-          popup: 'animate__animated animate__bounceIn'
-  },
+          popup: 'animate__animated animate__bounceIn',
+        },
         hideClass: {
-         popup: 'animate__animated animate__fadeOutUp'
-  }
+          popup: 'animate__animated animate__fadeOutUp',
+        },
       });
 
       closeOrderModal(backdrop);
     } catch (err) {
-
       Swal.fire({
         icon: 'error',
         title: 'Помилка',
         text: err.message,
-        background: 'var(--color-scheme-1-foreground)', 
+        background: 'var(--color-scheme-1-foreground)',
         confirmButtonColor: 'var(--color-mariner-dark)',
       });
     }

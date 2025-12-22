@@ -170,7 +170,7 @@ import{i as Z,a as D,S as q,b as G,N as Q,P as me,K as ee,A as pe,R as be,M as g
         <span class="faq-question">${e}</span>
         <span class="faq-icon">
           <svg aria-hidden="true" width="24" height="24">
-            <use href="${p}public/sprite.svg#icon-add"></use>
+            <use href="${p}sprite.svg#icon-add"></use>
           </svg>
         </span>
       </button>

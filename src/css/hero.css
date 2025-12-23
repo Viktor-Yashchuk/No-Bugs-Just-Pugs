@@ -4,8 +4,6 @@
   margin: 0 auto;
   min-width: 320px;
   height: clamp(544px, calc(544px + 356 * ((100vw - 320px) / 1120)), 900px);
-  /* min-height: 544px;
-  height: clamp(544px, 60vh, 900px); */
 }
 
 .hero-background {
@@ -76,7 +74,6 @@
 .hero-btn:hover,
 .hero-btn:focus {
   border-color: var(--color-mariner-dark);
-  /* background-color: var(--color-mariner-lighter); */
   color: var(--color-neutral-darkest);
   background-color: var(--color-mariner);
 }

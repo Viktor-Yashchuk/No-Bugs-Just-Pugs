@@ -230,12 +230,12 @@
 .pets-load-btn {
   display: none;
   width: 100%;
-  color: var(--color-white);
   font-size: 14px;
   line-height: 1.5;
   border-radius: 8px;
   border: 1px solid var(--color-mariner-dark);
   background-color: var(--color-mariner-dark);
+  color: var(--color-white);
   padding: 12px 0;
   transition: background-color 500ms ease-in-out, color 500ms ease-in-out,
     box-shadow 500ms ease-in-out;
@@ -243,8 +243,11 @@
 
 .pets-load:hover,
 .pets-load:focus {
-  background-color: var(--color-mariner-lighter);
+  /* background-color: var(--color-mariner-lighter);
+  color: var(--color-neutral-darkest); */
+  border-color: var(--color-mariner-dark);
   color: var(--color-neutral-darkest);
+  background-color: var(--color-mariner);
 }
 
 /* tablet */
@@ -330,15 +333,15 @@
   }
 }
 
-body .iziToast.my-toast>.iziToast-close {
-  background: url("/public/close.svg") no-repeat center center;
+body .iziToast.my-toast > .iziToast-close {
+  background: url('/public/close.svg') no-repeat center center;
   background-size: auto;
   opacity: 1;
   transition: none;
 }
 
-body .iziToast.my-toast>.iziToast-close:hover {
-  background: url("/public/close.svg") no-repeat center center;
+body .iziToast.my-toast > .iziToast-close:hover {
+  background: url('/public/close.svg') no-repeat center center;
   background-size: 18px 18px;
   opacity: 1;
 }

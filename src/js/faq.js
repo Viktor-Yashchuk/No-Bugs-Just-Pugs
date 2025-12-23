@@ -152,7 +152,7 @@ for (let i = 0; i < total; i++) {
   svg.classList.add('icon');
 
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-  use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#paw');
+  use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#paw1');
 
   svg.appendChild(use);
   paw.appendChild(svg);
